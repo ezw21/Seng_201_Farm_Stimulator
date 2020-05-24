@@ -36,6 +36,7 @@ Project can be build automaticallty in Eclipse ide. Under project tab >
 Build Automatically .Compile and run from GUI_Setup - For whole game Process
 	GUI_body - Skip setup and start with a set of value by constructor
 
+Source code is located in FarmStimulator > src > Game_Structure
 
 Running games
 =============

@@ -342,29 +342,29 @@ public class Farm {
 	 * SeedingAction	User select a seed from drop down selection box, then select crop plot and perform seed button
 	 * 6 seed and 4 crop plot of options and combination
 	 */
-	public void SeedingAction() {																							//seeding process algorithm
+	public void SeedingAction() {																										//seeding process algorithm
 		String seed = (String)Seed_selection.getSelectedItem();
 		
-		if (seed == "Tomato" ) {																							//Seed checking
+		if (seed == "Tomato" ) {																										//Seed checking
 			//Selection = 1
 			if ((chckbxCrop_1.isSelected()) && (Game_Profile.getCrop_Plot(1).isPlot_available())) {										// Check Crop Plot availability
-				if (Game_Profile.getFarmer_tomato_seed() >= 1) {															//Check seed availability
+				if (Game_Profile.getFarmer_tomato_seed() >= 1) {																		//Check seed availability
 				updatePlotSeeding(Game_Profile.getCrop_Plot(1), seed ,2);
 				}// End of seed check
 				else {	
-					setDialog("<html> You dont have this seed.");														// Not enough seed
+					setDialog("<html> You dont have this seed.");																		// Not enough seed
 				}
 			}else if ((chckbxCrop_1.isSelected()) && (Game_Profile.getCrop_Plot(1).isPlot_available() == false)) {
-				setDialog("<html> Crop Plot 1 is currently not available.");											// Crop Plot not available
+				setDialog("<html> Crop Plot 1 is currently not available.");															// Crop Plot not available
 			} // End of first checkbox
 			
 			
 			if ((chckbxCrop_2.isSelected()) && (Game_Profile.getCrop_Plot(2).isPlot_available())) {										// Check Crop Plot availability
-				if (Game_Profile.getFarmer_tomato_seed() >= 1) {															//Check seed availability
+				if (Game_Profile.getFarmer_tomato_seed() >= 1) {																		//Check seed availability
 				updatePlotSeeding(Game_Profile.getCrop_Plot(2), seed ,2);
 				}// End of seed check
 				else {	
-					setDialog("<html> You dont have this seed.");														// Not enough seed
+					setDialog("<html> You dont have this seed.");																		// Not enough seed
 				}
 			}
 			else if ((chckbxCrop_2.isSelected()) && (Game_Profile.getCrop_Plot(2).isPlot_available() == false)) {

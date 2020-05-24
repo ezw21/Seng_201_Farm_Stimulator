@@ -1,9 +1,11 @@
 package Game_Structure;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,8 +14,16 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.junit.Test;
+
+/**
+ * Barn Class is implemented as a View class (Project is trying to approach to Model-view-controller design pattern)
+ * This class contain the View design and button action of this Panel - Barn
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 18/05/2020
+ */
 public class Barn {
-	
+	//Init of all component in Barn & Object
 	private JPanel JPanel;
 	private Game_Profile Game_Profile;
 	private Controller controller;
@@ -27,14 +37,21 @@ public class Barn {
 	JLabel Goat = new JLabel("Barn is empty...");
 	JLabel Chicken = new JLabel("Chicken Hoop is empty...");
 	
-//	JPanel Barn_and_Chicken_Hoop_Panel = new JPanel();
 	final JLabel happiness_qtn = new JLabel("0");
 	final JLabel healthiness_qtn = new JLabel("0");
 	JButton Feeding_Chicken = new JButton("FEED ANIMAL ");
 	JButton Blank = new JButton("Brush?");
 	JButton Play_In_Barn = new JButton("PLAY FOOTBALL IN BARN ");
-
 	
+	
+	/**
+	 * construct Game_Profile, Barn panel and other classes/panel that will be updated in this class
+	 * @param jPanel 			Barn panel
+	 * @param game_Profile		Access the data (model class) from Game_Profile
+	 * @param Controller		Access the action (controller class) from Controller
+	 * @param base_Component 	Access to update stats ,energy ,inventory
+	 * @param inventory			Access Inventory panel for updating	
+	 */
 	public Barn(javax.swing.JPanel jPanel, Game_Structure.Game_Profile game_Profile, Controller Controller, Base_Component base_Component,Inventory inventory ) {
 		super();
 		JPanel = jPanel;
@@ -43,15 +60,13 @@ public class Barn {
 		controller = Controller;
 		Inventory = inventory;
 		
-		initBarn();
-		init();
+		initBarn();		// init of all component
+		init();			// add all component
 		
 	}
-	
-	public void setDialog(String text) {
-		Base_Component.setDialog(text);
-	}
-	
+	/**
+	 * //Add component to Barn panel
+	 */
 	private void init() {
 		// Barn Panel
 		JPanel.add(Cow);
@@ -68,14 +83,11 @@ public class Barn {
 		JPanel.add(healthiness_qtn);
 	}
 	
-	public JPanel getJPanel() {
-		return JPanel;
-	}
-
-	public void initBarn() {								//Init component in Barn panel
-		
-//		Barn_and_Chicken_Hoop_Panel.setBorder(new EmptyBorder(0, 0, 0, 0));
-//		Barn_and_Chicken_Hoop_Panel.setLayout(null);
+	/**
+	 * initBarn including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in Barn panel design
+	 */
+	public void initBarn() {								
 		
 		Cow.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
 		Cow.setHorizontalAlignment(SwingConstants.CENTER);
@@ -120,6 +132,8 @@ public class Barn {
 		
 		Animal_Info.setText("INFO");
 		
+		
+		//Button action in Barn Panel 
 		//PLAY IN BARN (Barn)
 		Play_In_Barn.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -128,6 +142,7 @@ public class Barn {
 		// Feeding (Farm)
 		Feeding_Chicken.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			controller.feedAnimal();
 			updateAll();
 		}}); 											// End of Animal feeding
 		
@@ -138,8 +153,6 @@ public class Barn {
 							+ "[Play football in barn ] - Consume one energy, Animals get happier."
 							+ "[Animal healthiness drop by 1/day, if you dont feed them they will get sick!<br>"
 							+ "[Animal happiness] Happy animal bring more profit for you[Allowance * Animal happiness]");}});	//End of -INFO (Barn)
-
-		
 		// BRUSH (Barn)
 		Blank.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -147,15 +160,10 @@ public class Barn {
 			}});
 
 	}
-	
-	public JButton getFeeding_Chicken() {
-		return Feeding_Chicken;
-	}
-
-	public JButton getPlay_In_Barn() {
-		return Play_In_Barn;
-	}
-
+	/**
+	 * UpdateBarn check the quantity of animal and display icon in barn (to show/remove existence of animal)
+	 * Display healthiness and happiness of Animal
+	 */
 	public void UpdateBarn() {				//Update happiness & healthiness
 		healthiness_qtn.setText("" + Game_Profile.getAnimal_healthiness());
 		happiness_qtn.setText("" + Game_Profile.getAnimal_happiness());
@@ -180,13 +188,13 @@ public class Barn {
 		}
 		
 	}
-	
-
-
+	/**
+	 * PlayInBarn allow user to play with animal in barn if happiness not in amx level and theres animal in barn and chicken hoop
+	 */
 	public void playInBarn() {								//Play in Barn algorithm
 		if(Game_Profile.getAnimal_happiness() >= 15) {														//Reach max animal happiness
 			setDialog("<html>They looks Overjoyed! I should keep up the good work.<br>[Animal hapiness = 15]");
-		}else if ((Game_Profile.getAnimal_cow() >= 1) || (Game_Profile.getAnimal_goat() >= 1) || (Game_Profile.getAnimal_chicken() >= 1)) {
+		}else if ((Game_Profile.getAnimal_cow() >= 1) || (Game_Profile.getAnimal_goat() >= 1) || (Game_Profile.getAnimal_chicken() >= 1)) { //check existence of animal in barn
 			if (Game_Profile.getFarmer_energy() != 0) {
 				Game_Profile.setFarmer_energy(Game_Profile.getFarmer_energy() - 1);							// Update energy
 				Game_Profile.setAnimal_happiness(Game_Profile.getAnimal_happiness() + 1);					// Update happiness
@@ -195,16 +203,32 @@ public class Barn {
 			}else {
 				setDialog("<html>You need some rest!");												// Display effect to user
 			}
-			
 		} else {
 			setDialog("You dont have animal...");
 		}
-		updateAll();
+		updateAll();				//Update all section that need to be updated
 	}
+	/**
+	 * Update Energy, stats , barn status and inventory after any action or change performed in Barn Panel 
+	 */
 	public void updateAll() {
 		Base_Component.UpdateEnergy();
 		Base_Component.UpdateStats();
 		Inventory.UpdateInventory();
 		UpdateBarn();
 	}
+	public void setDialog(String text) {
+		Base_Component.setDialog(text);
+	}
+	public JPanel getJPanel() {
+		return JPanel;
+	}
+	public JButton getFeeding_Chicken() {
+		return Feeding_Chicken;
+	}
+
+	public JButton getPlay_In_Barn() {
+		return Play_In_Barn;
+	}
+
 }

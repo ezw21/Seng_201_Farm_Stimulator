@@ -7,9 +7,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
+/**
+ * Inventory Class is implemented as a View class (Project is trying to approach to Model-view-controller design pattern)
+ * This class implemented to display content to the user 
+ * Contain all label in Inventory for displaying certain value / quantity
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 17/05/2020
+ */
 public class Inventory {
-	
+	//init all component
 	private JPanel JPanel;
 	private Game_Profile Game_Profile;
 	
@@ -86,22 +92,27 @@ public class Inventory {
 	final JLabel goat_qtn = new JLabel();		
 	final JLabel chicken_qtn = new JLabel();
 	
-	
+
+	/**
+	 * Construct game profile and upadte with access of other classes
+	 * @param jPanel			Inventory Panel
+	 * @param game_Profile		Access the data (model class) from Game_Profile
+	 */
 	public Inventory(JPanel jPanel, Game_Structure.Game_Profile game_Profile) {
 		super();
 		JPanel = jPanel;
 		Game_Profile = game_Profile;
 		
-		initInventory();
-		UpdateInventory();
-		init();
+		initInventory();		//init of all component
+		UpdateInventory();		// Set certain value with default quantity/ value
+		init();					//add component into panel
 		
 	}
 
-	public JPanel getJPanel() {
-		return JPanel;
-	}
 
+	/**
+	 * Add component into Inventory panel
+	 */
 	private void init() {
 		// Add all label for JPanel panel
 		JPanel.add(lblNewLabel_2);
@@ -176,7 +187,10 @@ public class Inventory {
 		JPanel.add(chicken_qtn);
 		
 	}
-
+	/**
+	 * initInventory including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in Inventory panel design
+	 */
 	public void initInventory() {							//Init component in Inventory panel
 		
 		// Init Inventory Panel
@@ -489,7 +503,9 @@ public class Inventory {
 		chicken_qtn.setBounds(578, 205, 22, 32);
 		
 	}	
-	
+	/**
+	 * updateInventory set label with default quantity and link to specific item_quantity
+	 */
 	public void UpdateInventory(){		//Update display in inventory panel 
 		
 		tomato_seed_qtn.setText("" + Game_Profile.getFarmer_tomato_seed());

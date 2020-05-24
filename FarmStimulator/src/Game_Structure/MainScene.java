@@ -10,7 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-
+/**
+ * Main Scene Class is implemented as a View class (Project is trying to approach to Model-view-controller design pattern)
+ * This class implemented to display content to the user 
+ * Contain all label and a toggle button in MainScene for displaying certain Info
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 16/05/2020
+ */
 public class MainScene {
 	
 	private JPanel JPanel;
@@ -24,15 +30,20 @@ public class MainScene {
 	
 	final JToggleButton tglbtnExplain = new JToggleButton("INFO");
 	
-	
+	/**
+	 * 
+	 * @param jPanel	MainScene Panel
+	 */
 	public MainScene(JPanel jPanel) {
 		super();
 		JPanel = jPanel;
 		
-		initMainScene();
-		init();
+		initMainScene();		// init of all component
+		init();					// add all component into panel
 	}
-	
+	/**
+	 * init add all component into MainScene panel
+	 */
 	private void init() {
 		//Add all label in Main_Scene panel
 		JPanel.add(Main_Scene_wallpaper);
@@ -42,6 +53,10 @@ public class MainScene {
 		JPanel.add(Action_no_requirement);
 		JPanel.add(Action_Set_Free);
 	}
+	/**
+	 * initMainScene including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in MainScene panel design
+	 */
 	public void initMainScene() {							//Init component in MainScene
 		tglbtnExplain.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		tglbtnExplain.setBounds(175, 230, 75, 25);			// End of button -INFO (MainScene)
@@ -59,7 +74,7 @@ public class MainScene {
 		Action_with_requirements.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 16));
 		Action_with_requirements.setBounds(10, 11, 240, 20);
 		Action_with_requirements.setOpaque(true);
-		
+	
 		
 		Action_Set_Rqrm = new JLabel("<html>"
 				+ "[0]Tend to crops<br>"
@@ -93,6 +108,9 @@ public class MainScene {
 		Action_Set_Free.setOpaque(true);
 		
 	}
+	/**
+	 * INFO_MainScene  Substitute s set of information into the wallpaper label when toggle button is pressed
+	 */
 	public void INFO_MainScene() {							//Display initial message in main scene
 		if (tglbtnExplain.isSelected()) {
 			Main_Scene_wallpaper.setIcon(null);

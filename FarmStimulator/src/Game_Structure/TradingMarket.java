@@ -10,8 +10,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
+/**
+ * TradingMarket Class is implemented as a View class (Project is trying to approach to Model-view-controller design pattern)
+ * This class contain the View design and button action of this Panel - Barn
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 19/05/2020
+ */
 public class TradingMarket {
+	//Init Object & component in TradingMarket Panel
 	private JPanel JPanel;
 	private Game_Profile Game_Profile;
 	private Base_Component Base_Component;
@@ -64,22 +70,30 @@ public class TradingMarket {
 	JLabel Hidden_item_4 = new JLabel("New label");
 	JLabel Hidden_item_5 = new JLabel("New label");
 	
-	public TradingMarket(JPanel jPanel, Game_Structure.Game_Profile game_Profile, Base_Component base_Component,Inventory inventory, Barn Barn ) {
+	/**
+	 * Construct game profile and upadte with access of other classes
+	 * @param jPanel			TradingMarket Panel
+	 * @param game_Profile		Access the data (model class) from Game_Profile
+	 * @param base_Component	Access to update stats ,energy ,inventory
+	 * @param inventory			Access Inventory for updating
+	 * @param barn				Access to allow update barn
+	 */
+	public TradingMarket(JPanel jPanel, Game_Structure.Game_Profile game_Profile, Base_Component base_Component,Inventory inventory, Barn barn ) {
 		super();
 		JPanel = jPanel;
 		Game_Profile = game_Profile;
 		Base_Component = base_Component;
 		Inventory = inventory;
-		Barn = Barn;
+		Barn = barn;
 	
-		initTradingMarket();
-		init();
+		initTradingMarket();		// init all component
+		init();						// add all component
 	}
 	
-	public JPanel getJPanel() {
-		return JPanel;
-	}
-	
+
+	/**
+	 * Add component to TradingMarket panel
+	 */
 	private void init() {
 		//Tradin Market
 				JPanel.add(Buy_lbl);
@@ -124,7 +138,10 @@ public class TradingMarket {
 				JPanel.add(btn_corn_feed);
 				JPanel.add(expand_farm);
 	}
-	
+	/**
+	 * initTradingMarket including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in TradingMarket panel design
+	 */
 	public void initTradingMarket() {						//Init component in trading market panel
 		Sell_btn.setFont(new Font("Tahoma", Font.BOLD, 11));
 		Buy_lbl.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 25));
@@ -207,30 +224,26 @@ public class TradingMarket {
 		expand_farm.setIcon(new ImageIcon(GUI_body.class.getResource("/game_Use/img/Basic_Farm.png")));
 		expand_farm.setBounds(517, 248, 190, 34);
 		
-		Sell_btn.addActionListener(new ActionListener() { 			//Algorithm of trading (sell) 
+		Sell_btn.addActionListener(new ActionListener() { 														//Algorithm of trading (sell) 
 			public void actionPerformed(ActionEvent e) {   
-				Trading();
-			}});
-		btn_cow.addActionListener(new ActionListener() {					//algorithm of trading cow
+				Trading();}});
+		btn_cow.addActionListener(new ActionListener() {														//algorithm of trading cow
 			public void actionPerformed(ActionEvent e) {
 				if (Game_Profile.getFarmer_gold() < 9000) {
 					setDialog("<html>Your need more GOLD");
-				}else if ((Game_Profile.getAnimal_cow() ==  0) && (Game_Profile.getFarmer_gold() >= 9000)) {								// Only one cow is allowed, farmer no cow yet
+				}else if ((Game_Profile.getAnimal_cow() ==  0) && (Game_Profile.getFarmer_gold() >= 9000)) {	// Only one cow is allowed, farmer no cow yet
 					Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 9000);	//Update Gold
 					Game_Profile.setAnimal_cow(1);									//buy one cow
 					setDialog("<html> Congratulations! you just got yours Farm a Cow. <br> -9000G");
-													
 
 				} else {
-					setDialog("<html>Your Barn is occupied... <br>Maybe you can upgrade your farm?");
-				}
-				Barn.updateAll();																//Update all stats
-			}});
-		btn_goat.addActionListener(new ActionListener() {					//algorithm of trading goat
+					setDialog("<html>Your Barn is occupied... <br>Maybe you can upgrade your farm?");}
+				Barn.updateAll();}});																			//Update all stats
+		btn_goat.addActionListener(new ActionListener() {														//algorithm of trading goat
 			public void actionPerformed(ActionEvent e) {
-				if (Game_Profile.getFarmer_gold() < 6000) {
+				if (Game_Profile.getFarmer_gold() < 6000) {														//condition Gold < price
 					setDialog("<html>Your need more GOLD");
-				}else if ((Game_Profile.getAnimal_goat() ==  0) && (Game_Profile.getFarmer_gold() > 6000)) {								// Only one goat is allowed, farmer no goat yet
+				}else if ((Game_Profile.getAnimal_goat() ==  0) && (Game_Profile.getFarmer_gold() > 6000)) {	// Only one goat is allowed, farmer no goat yet
 					Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 6000);	//Update Gold
 					Game_Profile.setAnimal_goat(1);									//buy one goat
 					setDialog("<html>Congratulations! you just got your Farm a Goat + 1.<br> -6000G");													
@@ -239,59 +252,60 @@ public class TradingMarket {
 				}else {
 					setDialog("<html>Your Barn is occupied... <br>Maybe you can upgrade your farm?");
 				}
-				Barn.updateAll();																//Update in Inventory
+				Barn.updateAll();																				//Update in Inventory
 			}});
-		btn_chicken.addActionListener(new ActionListener() { 				//algorithm of trading chicken
+		btn_chicken.addActionListener(new ActionListener() { 													//algorithm of trading chicken
 			public void actionPerformed(ActionEvent e) {
-				if (Game_Profile.getFarmer_gold() < 2200) {
+				if (Game_Profile.getFarmer_gold() < 2200) {														//condition Gold < price
 					setDialog("<html>Your need more GOLD");
-				}else if ((Game_Profile.getAnimal_chicken() ==  0) && (Game_Profile.getFarmer_gold() >= 2200)) {								// Only one chicken is allowed, farmer no chicken yet
-						Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 2200);	//Update Gold
-						Game_Profile.setAnimal_chicken(1);									//buy one chicken
+				}else if ((Game_Profile.getAnimal_chicken() ==  0) && (Game_Profile.getFarmer_gold() >= 2200)) {// Only one chicken is allowed, farmer no chicken yet
+						Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 2200);						//Update Gold
+						Game_Profile.setAnimal_chicken(1);														//buy one chicken
 						setDialog("<html> Congratulations! you just got your Farm a Chicken + 1.<br> -2200G");											
 						
 
 				} else {
 						setDialog("<html>Your Chicken Hoop is occupied... <br>Maybe you can upgrade your farm?");
 				}
-				Barn.updateAll();																//Update all stats
+				Barn.updateAll();																				//Update all stats
 			}});		
-		btn_corn_feed.addActionListener(new ActionListener() {				//algorithm of trading corn feed
+		btn_corn_feed.addActionListener(new ActionListener() {													//algorithm of trading corn feed
 			public void actionPerformed(ActionEvent e) {
-				if (Game_Profile.getFarmer_gold() < 15) {
+				if (Game_Profile.getFarmer_gold() < 15) {														//condition Gold < price
 					setDialog("<html>Your need more GOLD");
 				}else {
-					Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 15);				// Update Farmer Gold
-					Game_Profile.setFarmer_corn_feed(Game_Profile.getFarmer_corn_feed() + 1);		// Update Farmer Corn Feed
+					Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 15);							// Update Farmer Gold
+					Game_Profile.setFarmer_corn_feed(Game_Profile.getFarmer_corn_feed() + 1);					// Update Farmer Corn Feed
 					setDialog("<html>Corn feed + 1.<br> -15G<br> Corn Feed = " + Game_Profile.getFarmer_corn_feed());
 					Barn.updateAll();
 				}}});					
-		expand_farm.addActionListener(new ActionListener() {  				//algorithm of expanding farm land
+		expand_farm.addActionListener(new ActionListener() {  													//algorithm of expanding farm land
 			public void actionPerformed(ActionEvent e) {
 				
-				if ((Game_Profile.getFarmer_gold() < 2000) && (Game_Profile.isUnlock_plot4() == false)) {
+				if ((Game_Profile.getFarmer_gold() < 2000) && (Game_Profile.getCrop_Plot(4).isUnlock() == false)) {//condition Gold < price
 					setDialog("<html>Expanding your farm require tools!<br>[Insufficient GOLD]");
 				}
-				if (Game_Profile.isUnlock_plot4() == false) {
-					if (Game_Profile.getFarmer_gold() >= 2000) {
-						Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 2000);			//Update farmer gold
-						Game_Profile.setPlot_4_available(true);										//Update crop plot 4 status
+				if (Game_Profile.getCrop_Plot(4).isUnlock() == false) {											//Not unlocked
+					if (Game_Profile.getFarmer_gold() >= 2000) {												//condition Gold > price
+						Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() - 2000);						//Update farmer gold
+						Game_Profile.getCrop_Plot(4).setUnlock(true);											//Update crop plot 4 status
 						setDialog("<html>Weedling the flame torch ...<br>I found a new area to Plant!!"
-								+ "<br> [You can now plants crop in Crop plot 4.<br>[-2000G]");			// Update Dialog of crop plot 4 in farm
-						//Here
-						//crop_icon_4.setText("Crop plot 4 is available");							// Show user the effect
-						Game_Profile.setUnlock_plot4(true);
+								+ "<br> [You can now plants crop in Crop plot 4.<br>[-2000G]");					// Update Dialog of crop plot 4 in farm
+																												// Show user the effect
+						Game_Profile.getCrop_Plot(4).setUnlock(true);
 					}
 				}else{
 					setDialog("Your farm is fully expanded.");
 				}Barn.updateAll();}});
 		
 	}
-	
-	public void Trading() {										//Sell and buy in trading market
-		Game_Profile.setProfit(0);;
+	/**
+	 * Trading allow farmer to sell the crops/animal to trade market
+	 */
+	public void Trading() {																						//Sell and buy in trading market
+		Game_Profile.setProfit(0);													//Set profit = 0 avoid intersecting with previous selling
 		
-		if ((sell_1.isSelected() == true) && (Game_Profile.getFarmer_tomato() >= 1)) {
+		if ((sell_1.isSelected() == true) && (Game_Profile.getFarmer_tomato() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 90); 		// Update FarmerGold
 			Game_Profile.setFarmer_tomato(Game_Profile.getFarmer_tomato() - 1);		// Update Farmer tomato
 			Game_Profile.setProfit(Game_Profile.getProfit() + 90); 					// Update profit
@@ -303,7 +317,7 @@ public class TradingMarket {
 		}else {
 			sell_1.setSelected(false);
 		}// End of checkBox 1
-		if ((sell_2.isSelected() == true) && (Game_Profile.getFarmer_pumpkin() >= 1)) {
+		if ((sell_2.isSelected() == true) && (Game_Profile.getFarmer_pumpkin() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 140); 		// Update FarmerGold
 			Game_Profile.setFarmer_pumpkin(Game_Profile.getFarmer_pumpkin() - 1);	//Update Farmer pumpkin
 			Game_Profile.setProfit(Game_Profile.getProfit() + 140); 				// Update profit
@@ -314,7 +328,7 @@ public class TradingMarket {
 		}else {
 			sell_2.setSelected(false);
 		} // End of checkBox 2
-		if ((sell_3.isSelected() == true) && (Game_Profile.getFarmer_pea() >= 1)) {
+		if ((sell_3.isSelected() == true) && (Game_Profile.getFarmer_pea() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 130); 		// Update FarmerGold
 			Game_Profile.setFarmer_pea(Game_Profile.getFarmer_pea() - 1);			//Update Farmer pea
 			Game_Profile.setProfit(Game_Profile.getProfit() + 130); 				// Update profit
@@ -325,7 +339,7 @@ public class TradingMarket {
 		} else {
 			sell_3.setSelected(false);
 		}// End of checkBox 3
-		if ((sell_4.isSelected() == true) && (Game_Profile.getFarmer_lettuce() >= 1)) {
+		if ((sell_4.isSelected() == true) && (Game_Profile.getFarmer_lettuce() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 70); 		// Update FarmerGold
 			Game_Profile.setFarmer_lettuce(Game_Profile.getFarmer_lettuce() - 1);	//Update Farmer lettuce
 			Game_Profile.setProfit(Game_Profile.getProfit() + 70); 					// Update profit
@@ -336,7 +350,7 @@ public class TradingMarket {
 		} else {
 			sell_4.setSelected(false);
 		}// End of checkBox 4
-		if ((sell_5.isSelected() == true) && (Game_Profile.getFarmer_turnip() >= 1)) {
+		if ((sell_5.isSelected() == true) && (Game_Profile.getFarmer_turnip() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 210); 		// Update FarmerGold
 			Game_Profile.setFarmer_turnip(Game_Profile.getFarmer_turnip() - 1);		//Update Farmer turnip
 			Game_Profile.setProfit(Game_Profile.getProfit() + 210); 				// Update profit
@@ -347,7 +361,7 @@ public class TradingMarket {
 		}else {
 			sell_5.setSelected(false);
 		} // End of checkBox 5
-		if ((sell_6.isSelected() == true) && (Game_Profile.getFarmer_corn() >= 1)) {
+		if ((sell_6.isSelected() == true) && (Game_Profile.getFarmer_corn() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 150); 		// Update FarmerGold
 			Game_Profile.setFarmer_corn(Game_Profile.getFarmer_corn() - 1);			//Update Farmer corn
 			Game_Profile.setProfit(Game_Profile.getProfit() + 150); 				// Update profit
@@ -361,7 +375,7 @@ public class TradingMarket {
 		
 		// Strawberry is not invented yet 
 		
-		if ((sell_8.isSelected() == true) && (Game_Profile.getAnimal_cow() >= 1)) {
+		if ((sell_8.isSelected() == true) && (Game_Profile.getAnimal_cow() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 4500); 		// Update FarmerGold
 			Game_Profile.setAnimal_cow(Game_Profile.getAnimal_cow() - 1);			//Update Farmer cow
 			Game_Profile.setProfit(Game_Profile.getProfit() + 4500); 				// Update profit
@@ -369,7 +383,7 @@ public class TradingMarket {
 		}else {
 			sell_8.setSelected(false);
 		} // End of checkBox 8
-		if ((sell_9.isSelected() == true) && (Game_Profile.getAnimal_goat() >= 1)) {
+		if ((sell_9.isSelected() == true) && (Game_Profile.getAnimal_goat() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 3000); 		// Update FarmerGold
 			Game_Profile.setAnimal_goat(Game_Profile.getAnimal_goat() - 1);			//Update Farmer Goat
 			Game_Profile.setProfit(Game_Profile.getProfit() + 3000); 				// Update profit
@@ -377,7 +391,7 @@ public class TradingMarket {
 		}else {
 			sell_9.setSelected(false);
 		} // End of checkBox 9
-		if ((sell_10.isSelected() == true) && (Game_Profile.getAnimal_chicken() >= 1)) {
+		if ((sell_10.isSelected() == true) && (Game_Profile.getAnimal_chicken() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 1100); 		// Update FarmerGold
 			Game_Profile.setAnimal_chicken(Game_Profile.getAnimal_chicken() - 1);	//Update Farmer chicken
 			Game_Profile.setProfit(Game_Profile.getProfit() + 1100); 				// Update profit
@@ -385,7 +399,7 @@ public class TradingMarket {
 		}else {
 			sell_10.setSelected(false);
 		} // End of checkBox 10
-		if ((sell_11.isSelected() == true) && (Game_Profile.getFarmer_mask() >= 1)) {
+		if ((sell_11.isSelected() == true) && (Game_Profile.getFarmer_mask() >= 1)) {						//Farmer have items to sell
 			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 5); 		// Update FarmerGold
 			Game_Profile.setFarmer_mask(Game_Profile.getFarmer_mask() - 1);			//Update Farmer mask
 			Game_Profile.setProfit(Game_Profile.getProfit() + 5); 					// Update profit
@@ -393,28 +407,32 @@ public class TradingMarket {
 			sell_11.setSelected(false);
 		} // End of checkBox 11
 		
-		if (Game_Profile.getProfit() >= 400 ) {
-			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 100);
+		if (Game_Profile.getProfit() >= 400 ) {																//hidden event extra bonus with profit > 400 per crate
+			Game_Profile.setFarmer_gold(Game_Profile.getFarmer_gold() + 100);								// bonus Gold
 			setDialog("<html>Good Work! " + Game_Profile.getFarmer_name() + "<br>"
 					+ "Heres another 100G for your bonus! [Receive bonus from KANG.] <br>"
 					+ "Profit of this crate = " + (Game_Profile.getProfit() + 100));
-		}else if (Game_Profile.getProfit() == 0) {
+		}else if (Game_Profile.getProfit() == 0) {															//No item to sell
 			setDialog("The Crate is EMPTY!");
 		}
 		else {
 		
-			setDialog("Profit of this crate = " + Game_Profile.getProfit());
+			setDialog("Profit of this crate = " + Game_Profile.getProfit());								//Display message
 		}	// End of Sell Process
 			
-		Game_Profile.setProfit(0);													// Clear Profit after using it														
-		Inventory.UpdateInventory();															// Update Inventory
-		Barn.UpdateBarn();
- //End of selling action - 
+		Game_Profile.setProfit(0);																			// Clear Profit after using it														
+		Inventory.UpdateInventory();																		// Update Inventory
+		Barn.UpdateBarn();																					//Update animal in barn
+		//End of selling action - 
 
-		Base_Component.UpdateStats();
+		Base_Component.UpdateStats();																		//update stats
 	}
 	
 	public void setDialog(String text) {
 		Base_Component.setDialog(text);
 	}
+	
+;
+//		assertEquals(0, test.farmer_mask);
+	
 }

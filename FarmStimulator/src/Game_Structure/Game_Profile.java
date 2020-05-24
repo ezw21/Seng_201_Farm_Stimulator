@@ -1,20 +1,28 @@
 package Game_Structure;
-
+/**
+ * Game_Profile Class is implemented as a Model class (Project is trying to approach to Model-view-controller design pattern)
+ * This class implemented as a data base for all View and Controller class. 
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 15/05/2020
+ */
 public class Game_Profile {
 	
+
+	
+	// All variable that will be used in the project
 	//Init Farmer - Stats
 	private int farmer_type;
 	private int farmer_gold;
 	private int day_num;
 	private int end_day;
 	private int farmer_energy;
+	private int age;
 	private String farmer_name;
 	private String farm_name;
 	
 	
 	// Init temp to store data
 	private String temp_str; 
-	private int farm_type;
 	
 	
 	//Init Shop - Products
@@ -71,120 +79,141 @@ public class Game_Profile {
 	private int animal_goat;
 	private int animal_chicken;
 	
-	//Init for Farm
-	 boolean plot_1_available;
-	 boolean plot_2_available;
-	 boolean plot_3_available;
-	 boolean plot_4_available;
-	 boolean watering;
-	 boolean unlock_plot4;
-	 boolean fertilizing;
-	 int plot_1_harvest_time;
-	 int plot_2_harvest_time;
-	 int plot_3_harvest_time;
-	 int plot_4_harvest_time;
-	 String plot_1_plant;
-	 String plot_2_plant;
-	 String plot_3_plant;
-	 String plot_4_plant;
+	boolean watering;
+	boolean fertilizing;
 	
+	private Crop_Plot Crop_Plot_1;
+	private Crop_Plot Crop_Plot_2;
+	private Crop_Plot Crop_Plot_3;
+	private Crop_Plot Crop_Plot_4;
 	
+	/**
+	 * 	Construct a new game_Profile setup in GUI_Setup - Default value constructor
+	 */
 	public Game_Profile() {
 		super();
+		initConfiguration();
 	}
-	
-	public Game_Profile(int farmer_type, int farmer_gold, int day_num, String farmer_name, String farm_name, int farm_type, int price_tomato_seed, int price_pumpkin_seed
-			, int price_pea_seed, int price_lettuce_seed, int price_turnip_seed, int price_corn_seed, int price_burger, int price_fertilizer, int price_relic_chair
-			, int price_water_jar, int price_axe, int price_mask, int cart_total, int farmer_tomato, int farmer_pumpkin, int farmer_pea, int farmer_lettuce, int farmer_turnip, int farmer_corn
-			, int farmer_tomato_seed, int farmer_pumpkin_seed, int farmer_pea_seed, int farmer_lettuce_seed, int farmer_turnip_seed, int farmer_corn_seed, int farmer_burger, int farmer_fertilizer
-			, int farmer_relic_chair, int farmer_water_jar, int farmer_axe, int farmer_mask, int farmer_corn_feed, int animal_happiness, boolean feed_animal, int farmer_energy
-			, int animal_healthiness, int animal_cow, int animal_goat, int animal_chicken, boolean plot_1_available, boolean plot_2_available, boolean plot_3_available, boolean plot_4_available
-			, int plot_1_harvest_time, int plot_2_harvest_time, int plot_3_harvest_time, int plot_4_harvest_time, boolean watering, boolean unlock_plot4, String plot_1_plant, String plot_2_plant,  String plot_3_plant
-			, String plot_4_plant, int profit, int relic_aura, boolean rest, int eat_burger, int axe_durability,  boolean fertilizing, int end_day) {
+	/**
+	 * Constructor of dependent variable
+	 * Construct with farmer type, farmer name, farm_name, farmer_energy, end_day after getting input from GUI_Setup
+	 * @param farmer_type	The type of farm in the range of 0 - 3
+	 * @param farmer_name	Farmer name of player
+	 * @param farm_name		Farm name selected by user 
+	 * @param farmer_energy	Farmer energy to perform action
+	 * @param end_day		Farmer conntract end day (end game)
+	 */
+	public Game_Profile(int farmer_type, String farmer_name, String farm_name, int farmer_energy, int end_day, int age) {
+
 		
-		// Farmer Stats
-		this.farmer_type = farmer_type;
-		this.farmer_gold = farmer_gold;
-		this.setDay_num(day_num);
-		this.farmer_name = farmer_name;
-		this.farm_name = farm_name;
-		this.farm_type = farm_type;
-		this.farmer_energy = farmer_energy;
-		this.end_day = end_day;
+		initConfiguration();
+		this.farmer_type 	= farmer_type;
+
+		
+		this.farmer_name 	= farmer_name;
+		this.farm_name 		= farm_name;
+		this.farmer_energy 	= farmer_energy;
+		this.end_day 		= end_day;
+		this.age 			= age;
+		
+	}
+
+	/**
+	 * initConfiguration Set the default value of all variable for the defaut value constructor
+	 */
+	private void initConfiguration() {
+		// Set the default value
+		//Stats
+		this.farmer_type 	= 0;
+		this.farmer_name 	= "Little Shit";
+		this.farm_name 		= "Bull shit";
+		this.farmer_energy 	= 3;
+		this.end_day 		= 5;
+		this.farmer_gold 	= 450;
+		this.day_num 		= 1;
 		
 		// Shop_Products
-		this.price_tomato_seed = price_tomato_seed;
-		this.price_pumpkin_seed = price_pumpkin_seed;
-		this.price_pea_seed = price_pea_seed;
-		this.price_lettuce_seed = price_lettuce_seed;
-		this.price_turnip_seed = price_turnip_seed;
-		this.price_corn_seed = price_corn_seed;
+		this.price_tomato_seed 	= 30;
+		this.price_pumpkin_seed = 30;
+		this.price_pea_seed 	= 60;
+		this.price_lettuce_seed = 60;
+		this.price_turnip_seed 	= 90;
+		this.price_corn_seed 	= 90;
 		
-		this.price_burger = price_burger;
-		this.price_fertilizer = price_fertilizer;
-		this.price_relic_chair = price_relic_chair;
-		this.price_water_jar = price_water_jar;
-		this.price_axe = price_axe;
-		this.price_mask = price_mask;
-		this.cart_total = cart_total;		
-		this.profit = profit;
+		this.price_burger 		= 60;
+		this.price_fertilizer 	= 100;
+		this.price_relic_chair 	= 210;
+		this.price_water_jar 	= 150;
+		this.price_axe 			= 600;
+		this.price_mask 		= 15;
+		this.cart_total 		= 0;		
+		this.profit 			= 0;
 		
 		// Inventory
-		this.farmer_tomato = farmer_tomato;
-		this.farmer_pumpkin = farmer_pumpkin;
-		this.farmer_pea = farmer_pea;
-		this.farmer_lettuce = farmer_lettuce;
-		this.farmer_turnip = farmer_turnip;
-		this.farmer_corn = farmer_corn;
+		this.farmer_tomato 	= 0;
+		this.farmer_pumpkin = 0;
+		this.farmer_pea 	= 0;
+		this.farmer_lettuce = 0;
+		this.farmer_turnip 	= 0;
+		this.farmer_corn 	= 0;
 		
-		this.farmer_tomato_seed = farmer_tomato_seed;
-		this.farmer_pumpkin_seed = farmer_pumpkin_seed;
-		this.farmer_pea_seed = farmer_pea_seed;
-		this.farmer_lettuce_seed = farmer_lettuce_seed;
-		this.farmer_turnip_seed = farmer_turnip_seed;
-		this.farmer_corn_seed = farmer_corn_seed;
+		this.farmer_tomato_seed  = 2;
+		this.farmer_pumpkin_seed = 2;
+		this.farmer_pea_seed 	 = 2;
+		this.farmer_lettuce_seed = 2;
+		this.farmer_turnip_seed  = 2;
+		this.farmer_corn_seed 	 = 2;
 		// Items & tool
-		this.farmer_burger = farmer_burger;
-		this.farmer_fertilizer = farmer_fertilizer;
-		this.farmer_relic_chair = farmer_relic_chair;
-		this.farmer_water_jar = farmer_water_jar;
-		this.farmer_axe = farmer_axe;
-		this.farmer_mask = farmer_mask;
-		this.farmer_corn_feed = farmer_corn_feed;
-		this.relic_aura = relic_aura;
-		this.eat_burger = eat_burger;
-		this.axe_durability = axe_durability;
+		this.farmer_burger 		= 3;
+		this.farmer_fertilizer	= 0;
+		this.farmer_relic_chair = 0;
+		this.farmer_water_jar	= 0;
+		this.farmer_axe 		= 1;
+		this.farmer_mask 		= 2;
+		this.farmer_corn_feed 	= 3;
+		this.relic_aura 		= 0;
+		this.eat_burger 		= 0;
+		this.axe_durability 	= 5;
 		
 		// Animal
-		this.animal_happiness = animal_happiness;
-		this.feed_animal = feed_animal;
-		this.animal_healthiness = animal_healthiness;
-		this.animal_cow = animal_cow;
-		this.animal_goat = animal_goat;
-		this.animal_chicken = animal_chicken;
+		this.animal_happiness 	= 3;
+		this.feed_animal 		= true;
+		this.animal_healthiness = 5;
+		this.animal_cow 		= 0;
+		this.animal_goat 		= 0;
+		this.animal_chicken 	= 0;
 		
-		// Farm
-		this.plot_1_available = plot_1_available;
-		this.plot_2_available = plot_2_available;
-		this.plot_3_available = plot_3_available;
-		this.plot_4_available = plot_4_available;
-
-		this.plot_1_harvest_time = plot_1_harvest_time;
-		this.plot_2_harvest_time = plot_2_harvest_time;
-		this.plot_3_harvest_time = plot_3_harvest_time;
-		this.plot_4_harvest_time = plot_4_harvest_time;
-		this.watering = watering;
-
-		this.unlock_plot4 = unlock_plot4;
-		this.plot_1_plant = plot_1_plant;
-		this.plot_2_plant = plot_2_plant;
-		this.plot_3_plant = plot_3_plant;
-		this.plot_4_plant = plot_4_plant;
-		this.rest = rest;
-		this.fertilizing = fertilizing;
+		this.Crop_Plot_1 = new Crop_Plot(true, true , 0, "" );
+		this.Crop_Plot_2 = new Crop_Plot(true, true , 0, "" );
+		this.Crop_Plot_3 = new Crop_Plot(true, true , 0, "" );
+		this.Crop_Plot_4 = new Crop_Plot(true, false, 0, "" );
 		
-		
+		this.rest 		 = true;
+		this.fertilizing = true;
+		this.watering 	 = true;
 	}
+	/**
+	 * getCrop_Plot
+	 * @param index index of crop plot
+	 * @return	selected crop plot with index
+	 */
+	public Crop_Plot getCrop_Plot(int index) {
+		if(index == 1) {
+			return this.Crop_Plot_1;
+		}
+		else if(index == 2) {
+			return this.Crop_Plot_2;
+		}
+		else if(index == 3) {
+			return this.Crop_Plot_3;
+		}
+		else if(index == 4) {
+			return this.Crop_Plot_4;
+		}else {
+			return null;
+		}
+	}
+	
 
 	// G & S of Farmer - Stats 
 	public int getFarmer_gold() {
@@ -211,6 +240,12 @@ public class Game_Profile {
 	public void setFarm_name(String farm_name) {
 		this.farm_name = farm_name;
 	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public int getEnd_day() {
 		return end_day;
 	}
@@ -222,12 +257,6 @@ public class Game_Profile {
 	}
 	public void setTemp_str(String temp_str) {
 		this.temp_str = temp_str;
-	}
-	public int getFarm_type() {
-		return farm_type;
-	}
-	public void setFarm_type(int farm_type) {
-		this.farm_type = farm_type;
 	}
 	public int getDay_num() {
 		return day_num;
@@ -514,55 +543,6 @@ public class Game_Profile {
 	public void setAnimal_chicken(int animal_chicken) {
 		this.animal_chicken = animal_chicken;
 	}
-	//G & S for Farm
-	public boolean isPlot_1_available() {
-		return plot_1_available;
-	}
-	public void setPlot_1_available(boolean plot_1_available) {
-		this.plot_1_available = plot_1_available;
-	}
-	public boolean isPlot_2_available() {
-		return plot_2_available;
-	}
-	public void setPlot_2_available(boolean plot_2_available) {
-		this.plot_2_available = plot_2_available;
-	}
-	public boolean isPlot_3_available() {
-		return plot_3_available;
-	}
-	public void setPlot_3_available(boolean plot_3_available) {
-		this.plot_3_available = plot_3_available;
-	}
-	public boolean isPlot_4_available() {
-		return plot_4_available;
-	}
-	public void setPlot_4_available(boolean plot_4_available) {
-		this.plot_4_available = plot_4_available;
-	}
-	public int getPlot_1_harvest_time() {
-		return plot_1_harvest_time;
-	}
-	public void setPlot_1_harvest_time(int plot_1_harvest_time) {
-		this.plot_1_harvest_time = plot_1_harvest_time;
-	}
-	public int getPlot_2_harvest_time() {
-		return plot_2_harvest_time;
-	}
-	public void setPlot_2_harvest_time(int plot_2_harvest_time) {
-		this.plot_2_harvest_time = plot_2_harvest_time;
-	}
-	public int getPlot_3_harvest_time() {
-		return plot_3_harvest_time;
-	}
-	public void setPlot_3_harvest_time(int plot_3_harvest_time) {
-		this.plot_3_harvest_time = plot_3_harvest_time;
-	}
-	public int getPlot_4_harvest_time() {
-		return plot_4_harvest_time;
-	}
-	public void setPlot_4_harvest_time(int plot_4_harvest_time) {
-		this.plot_4_harvest_time = plot_4_harvest_time;
-	}
 	public boolean isWatering() {
 		return watering;
 	}
@@ -570,36 +550,4 @@ public class Game_Profile {
 		this.watering = watering;
 	}
 
-	public boolean isUnlock_plot4() {
-		return unlock_plot4;
-	}
-	public void setUnlock_plot4(boolean unlock_plot4) {
-		this.unlock_plot4 = unlock_plot4;
-	}
-	public String getPlot_1_plant() {
-		return plot_1_plant;
-	}
-	public void setPlot_1_plant(String plot_1_plant) {
-		this.plot_1_plant = plot_1_plant;
-	}
-	public String getPlot_2_plant() {
-		return plot_2_plant;
-	}
-	public void setPlot_2_plant(String plot_2_plant) {
-		this.plot_2_plant = plot_2_plant;
-	}
-	public String getPlot_3_plant() {
-		return plot_3_plant;
-	}
-	public void setPlot_3_plant(String plot_3_plant) {
-		this.plot_3_plant = plot_3_plant;
-	}
-	public String getPlot_4_plant() {
-		return plot_4_plant;
-	}
-	public void setPlot_4_plant(String plot_4_plant) {
-		this.plot_4_plant = plot_4_plant;
-	}
-
-	
 }

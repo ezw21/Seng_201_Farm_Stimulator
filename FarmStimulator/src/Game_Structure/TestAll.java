@@ -10,15 +10,13 @@ import org.junit.Test;
  * TestAll Class is implemented as a JUnit test class
  * it run test throughout all method in this package to check various status or variable
  * @author Edward Wong - University of Canterbury SENG_201 
- * 24/05/2020
+ * 25/05/2020
  */
 public class TestAll {
-	/**
-	 * There is at least one tested status of each method to ensure the algorithm works
-	 * I know it should be testing more/all variable to achieve good quality software
-	 * This JUnit test was suppose to be done by my partner, but I only receive it at the night before due
-	 * And the unit test he did is just with local variable as he didnt take part in developing other class (he don know how to access data from model class)
-	 * My case was reported to Professor Miguel long ago, I will include the test that he did in the submission as well(stored in a specific folder)
+	/*
+	 * My partner Sam tried to do test case for all method, he don know how to access Model Class -Game_Profile
+	 * So he did it in local variable and it was kinda hard for me to merge it with this
+	 * Hence , On the day before due, I started implementing this UnitTest class
 	 */
 	// Init to get access of another class
 	private Game_Profile Game_Profile;
@@ -86,25 +84,45 @@ public class TestAll {
 		assertEquals(false, Game_Profile.getCrop_Plot(1).isPlot_available());		// test crop plot availability
 		
 		//UPDATE STATUS
-		Game_Profile.setFarmer_tomato_seed(seed_num);								// update seed quantity to previous state
+		Game_Profile.setFarmer_tomato_seed(0);								// update seed quantity to previous state
 		Farm.Seed_selection.setSelectedIndex(0);									// Update seed selection to precious state
 		Game_Profile.getCrop_Plot(1).setPlot_available(true);						// Update availabilty of crop plot1
-		Farm.chckbxCrop_1.setSelected(false);										//	Preset crop plot 1 is unselected	
+		Farm.chckbxCrop_1.setSelected(false);										//	Preset crop plot 1 is unselected
+		Farm.SeedingAction();														// Perform seeding action	
 	}
 	@Test
 
 	/**Farm
-	 * Testing method for Watering method , check effect of crop plot1
+	 * Testing method for Watering method , check effect of all crop plot
 	 */
 	public void testWatering_Farm() {
-		Game_Profile.getCrop_Plot(1).setPlot_harvest_time(1);						//Preset harvest time of plot 1 = 1
 		Game_Profile.setWatering(true);												//Enable watering
+		Game_Profile.getCrop_Plot(1).setPlot_harvest_time(1);						//Preset harvest time of plot 1 = 1							
 		Game_Profile.getCrop_Plot(1).setPlot_available(false);						//Preset crop plot1 to be occupied
+		Game_Profile.getCrop_Plot(2).setPlot_harvest_time(1);						//Preset harvest time of plot 2 = 1							
+		Game_Profile.getCrop_Plot(2).setPlot_available(false);						//Preset crop plot1 to be occupied
+		Game_Profile.getCrop_Plot(3).setPlot_harvest_time(1);						//Preset harvest time of plot 3 = 1							
+		Game_Profile.getCrop_Plot(3).setPlot_available(false);						//Preset crop plot1 to be occupied
+		Game_Profile.getCrop_Plot(4).setPlot_harvest_time(1);						//Preset harvest time of plot 4 = 1							
+		Game_Profile.getCrop_Plot(4).setPlot_available(false);						//Preset crop plot1 to be occupied
+		Game_Profile.getCrop_Plot(4).setUnlock(true);								//Preset unlocked plot
 		Farm.Watering_Farm();														//Perform watering
 		assertEquals(0, Game_Profile.getCrop_Plot(1).getPlot_harvest_time());		// Test the harvest time after watering	
-		
-		//UPDATE STATUS
+		assertEquals(0, Game_Profile.getCrop_Plot(2).getPlot_harvest_time());		// Test the harvest time after watering	
+		assertEquals(0, Game_Profile.getCrop_Plot(3).getPlot_harvest_time());		// Test the harvest time after watering	
+		assertEquals(0, Game_Profile.getCrop_Plot(4).getPlot_harvest_time());		// Test the harvest time after watering	
 		Game_Profile.setWatering(true);												//Enable watering
+		Game_Profile.getCrop_Plot(1).setPlot_harvest_time(2);						//Preset harvest time of plot 1 = 1		
+		Game_Profile.getCrop_Plot(2).setPlot_harvest_time(2);						//Preset harvest time of plot 2 = 2		
+		Game_Profile.getCrop_Plot(3).setPlot_harvest_time(2);						//Preset harvest time of plot 3 = 3		
+		Game_Profile.getCrop_Plot(4).setPlot_harvest_time(2);						//Preset harvest time of plot 4 = 4	
+		Farm.Watering_Farm();														//Perform watering
+		assertEquals(1, Game_Profile.getCrop_Plot(1).getPlot_harvest_time());		// Test the harvest time after watering	
+		assertEquals(1, Game_Profile.getCrop_Plot(2).getPlot_harvest_time());		// Test the harvest time after watering	
+		assertEquals(1, Game_Profile.getCrop_Plot(3).getPlot_harvest_time());		// Test the harvest time after watering	
+		assertEquals(1, Game_Profile.getCrop_Plot(4).getPlot_harvest_time());		// Test the harvest time after watering	
+		//UPDATE STATUS
+		
 		Game_Profile.getCrop_Plot(1).setPlot_available(true);						//Update crop plot1 to be ready for planting
 	}
 	@Test
@@ -112,16 +130,35 @@ public class TestAll {
 	 * Testing method for Harvesting method, check effect of crop plot 1
 	 */
 	public void testHarvesting() {
+		int energy = Game_Profile.getFarmer_energy();								//Clone farmer energy
+		
 		Game_Profile.getCrop_Plot(1).setPlot_harvest_time(0);						//Preset harvest time of plot 1 = 1
 		Game_Profile.getCrop_Plot(1).setPlot_available(false);						//Update crop plot1 to occupied
-		Farm.chckbxCrop_1.setSelected(true);										//	Preset crop plot 1 is selected		
-		int energy = Game_Profile.getFarmer_energy();								//Clone farmer energy
+		Farm.chckbxCrop_1.setSelected(true);										//	Preset crop plot 1 is selected	
 		Farm.Harvesting();															//Perform harvesting
 		assertEquals(energy - 1, Game_Profile.getFarmer_energy());					//Test farmer energy after harvesting
-		//UPDATE STATUS
-		Game_Profile.getCrop_Plot(1).setPlot_available(true);						//Update crop plot1 to be ready for planting
-		Farm.chckbxCrop_1.setSelected(false);										//	Preset crop plot 1 is not selected	
-		Game_Profile.setFarmer_energy(energy);										// update energy to previous state
+		Game_Profile.setFarmer_energy(energy);							 			// update energy to previous state
+		Game_Profile.getCrop_Plot(2).setPlot_harvest_time(0);						//Preset harvest time of plot 2 = 1
+		Game_Profile.getCrop_Plot(2).setPlot_available(false);						//Update crop plot2 to occupied
+		Farm.chckbxCrop_2.setSelected(true);										//	Preset crop plot 2 is selected	
+		Farm.Harvesting();															//Perform harvesting
+		assertEquals(energy - 1, Game_Profile.getFarmer_energy());					//Test farmer energy after harvesting
+		Game_Profile.setFarmer_energy(energy);							 			// update energy to previous state
+		Game_Profile.getCrop_Plot(3).setPlot_harvest_time(0);						//Preset harvest time of plot 3 = 3
+		Game_Profile.getCrop_Plot(3).setPlot_available(false);						//Update crop plot3 to occupied
+		Farm.chckbxCrop_3.setSelected(true);										//	Preset crop plot 3 is selected
+		Farm.Harvesting();															//Perform harvesting
+		assertEquals(energy - 1, Game_Profile.getFarmer_energy());					//Test farmer energy after harvesting
+		Game_Profile.setFarmer_energy(energy);							 			// update energy to previous state
+		Game_Profile.getCrop_Plot(4).setPlot_harvest_time(0);						//Preset harvest time of plot 4 = 4
+		Game_Profile.getCrop_Plot(4).setPlot_available(false);						//Update crop plot4 to occupied
+		Farm.chckbxCrop_4.setSelected(true);										//	Preset crop plot 4 is selected	
+		Game_Profile.getCrop_Plot(4).setUnlock(true);								//Preset unlocked plot
+		Farm.Harvesting();															//Perform harvesting
+		assertEquals(energy - 1, Game_Profile.getFarmer_energy());					//Test farmer energy after harvesting
+		Game_Profile.setFarmer_energy(0);							 				// update energy to previous state	
+		Farm.Harvesting();															//Perform harvesting
+
 	}
 	
 	@Test

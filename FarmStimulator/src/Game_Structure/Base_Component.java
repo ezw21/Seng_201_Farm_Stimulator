@@ -14,8 +14,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 
+/**
+ * Base_Component Class is implemented as a update class (Project is trying to approach to Model-view-controller design pattern)
+ * This class mainly be called to update the Stats, energy, dialog, Inventory
+ * It also have the component for menu bar/ menu item and a proceed button as all this trigger an update
+ * @author Edward Wong - University of Canterbury SENG_201 
+ * 17/05/2020
+ */
 public class Base_Component {
-	
+	//Init component in Frame
 	private JFrame JFrame;
 	private Game_Profile Game_Profile;
 	
@@ -51,59 +58,63 @@ public class Base_Component {
 	JMenuItem relic_chair = new JMenuItem();
 	JMenuItem end_day = new JMenuItem("Sleep without making diary..");
 	
-	
-	
-	
+
+	/**
+	 * Construct a game_Profile and the Frame 
+	 * @param jFrame		Main Frame which contain menubar main button
+	 * @param game_Profile	Access the data (model class) from Game_Profile
+	 */
 	public Base_Component(javax.swing.JFrame jFrame, Game_Structure.Game_Profile game_Profile) {
 		super();
 		JFrame = jFrame;
 		Game_Profile = game_Profile;
 		
-		initframeDesign();
-		initMenu();
-		init();
+		initframeDesign();		// init of frame design
+		initMenu();				// init of menu design
+		init();					// add all component
 	}
-
+	
+	/**
+	 * init Add all component into frame 
+	 */
 	public void init() {
 		
-		
-		
+		//Frame
 		JFrame.getContentPane().add(menuBar);
 		JFrame.getContentPane().add(Dialog);
 		JFrame.getContentPane().add(Stats);
-		menuBar.add(Home);
-		menuBar.add(Animal);
-		menuBar.add(Farm);
-		menuBar.add(Town);
 		JFrame.getContentPane().add(btnA);
 		JFrame.getContentPane().add(btnO);
 		JFrame.getContentPane().add(Energy_bar);
 		JFrame.getContentPane().add(energy_value);	
+		menuBar.add(Home);
+		menuBar.add(Animal);
+		menuBar.add(Farm);
+		menuBar.add(Town);
 		
+		//Menu item
 		Town.add(Trade_Items);
 		Town.add(Trading_market);
-		
 		Home.add(Go_Home);
 		Home.add(Open_Inventory);
 		Home.add(relic_chair);
 		Home.add(eat_burger);
 		Home.add(end_day);
 		Animal.add(Go_To_Animal);
-
 		Farm.add(Go_to_farm);
 		Farm.add(Chop_tree_strumps);
 		Farm.add(Fertilizing);
 		
-
-		
+		// Button in frame
 		btnA.addActionListener(new ActionListener() {			// This button is stored in initialize as its a seperate Introduction button in Main frame //Button B is just for dessign
 			public void actionPerformed(ActionEvent e) {
-				proceedButton();
-			} // End of actionPerformed
-		}); // End of actionListener
+				proceedButton();}}); // End of actionListener
 	}
 	
-	public void UpdateEnergy() {					//Update energy status to energy bar and energy value
+	/**
+	 * UpdateEnergy Update energy status to energy bar and energy value, display energy icon
+	 */
+	public void UpdateEnergy() {					
 		
 		energy_value.setText("" + Game_Profile.getFarmer_energy());		// Show energy on energy_value
 		if (Game_Profile.getFarmer_energy() >= 4) {
@@ -118,15 +129,20 @@ public class Base_Component {
 			Energy_bar.setIcon(new ImageIcon(GUI_body.class.getResource("/game_Use/img/Health0.png")));
 		}
 	}
-
-	public void UpdateStats() {						// Update day num, gold in stats
+	/**
+	 * UpdateStats Update day num, gold in stats in the Stats label
+	 */
+	public void UpdateStats() {						
 		Stats.setText("<html>" + Game_Profile.getFarm_name() + "'s Farm<br>" 
 				+ Game_Profile.getFarmer_name() + "<br>"
 				+ "Gold = " + Game_Profile.getFarmer_gold() + "<br>"
 						+ "Day " + Game_Profile.getDay_num());
 	}
-	
-	public void proceedButton() {					//Carry on introduction in state
+	/**
+	 * Trigger button to perform Introduction in Dialog - Added into frame
+	 * Continue and process with the game_state and condition  from GUI_Setup
+	 */
+	public void proceedButton() {					
 		
 		if ((game_state == 2) && (condition == 0)) { //Introduction on Main_Scene
 			Dialog.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 14));
@@ -172,7 +188,10 @@ public class Base_Component {
 			condition = 0;						//End of proceed procedure, Loop back to first introduction
 		} //[2][5]
 	}
-
+	/**
+	 * initframeDesignn including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in Main Frame
+	 */
 	public void initframeDesign() {							//init all component outside panel
 	
 		
@@ -204,7 +223,10 @@ public class Base_Component {
 		Stats.setBounds(633, 0, 91, 75);
 		Stats.setOpaque(true);
 	}	
-	
+	/**
+	 * initMenu including set fond, background, bounds, layout, Opaque, button, allignment
+	 * Init component in Menu and MenuItem
+	 */
 	public void initMenu() {								//Init component in Menu 
 		Home.setText("Home");
 		Home.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 14));
