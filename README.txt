@@ -25,6 +25,7 @@ iv.Random Event - random event happens on the day before ending (in morning)
 	b. Wolf attack 	   - Wolf attacked (nothing happnes if no animal)
 			   Cow can protect chicken,or chicken will be stolen
 	3.Mysterious berry - Mysterious person gift a berry that +3 Energy
+
 Installation // building
 ============
 
@@ -42,7 +43,7 @@ Running games
 It is also possible to start a game from the
 command line:
 
-	java -jar FarmStimulator.jar
+	java -jar ezw21_yli406_FarmingSimulator.jar
 
 
 Controllers
@@ -73,7 +74,7 @@ Town		Go to Supermarket, Go to Trading Market
 Trigger Button	Info, purchase, feed animal etc..
 
 History
-=======
+======= Release to discord group for player to test and give feedback
 19/05/2020
 v1.0 (fixed)
      Game is fully designed and exported in JAR file for the 1st time
@@ -172,10 +173,10 @@ starting to develop this game to get a better idea.
 
 Contact
 =======
-
+Used git kraken to Stage, commit, push
 Github : https://github.com/ezw21/Seng_201_Farm_Stimulator
 Course : University of Canterbury Seng_201 - 2020
-Author : Edward Wong 42507853
+Author : Edward Wong ezw21
 
 Course : University of Canterbury Seng_201 - 2020
 Samuel Lin Help with Use case diagram, JUnit test (by init local variable)
@@ -184,5 +185,5 @@ Samuel Lin Help with Use case diagram, JUnit test (by init local variable)
 	   for marking purpose)
 
 	   Programe actual JUnit was implemented again by Edward on the 
-	   day before due after receiving Sam Test classes (hard to apply)
+	   day before due after receiving Sam Test classes (hard to merge)
 	   as he knows how to access Model Class from View, Controller Class	
