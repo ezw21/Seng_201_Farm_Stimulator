@@ -77,7 +77,7 @@ public class GUI_body {
 		Game_Profile = new Game_Profile(1, "Little shit", "Bull shit", 10, 5, 10);// Set default stats, Testing 
 		// Start game in game body dosent do much if game is started from GUI_setup
 		
-		
+		//Game_Profile.setFarmer_gold(20000);
 		initialize_body();				//Add component into frame - panel
 		Barn.updateAll();				//Update inventory, stats, energy abr
 
