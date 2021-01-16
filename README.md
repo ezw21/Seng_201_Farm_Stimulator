@@ -17,9 +17,12 @@ The stimulator has been designed to be as easy to use as possible
 Beside of the main game flow, theres bunch of hidden event
 
 i.Relic chair  - Sitting on chair gain aura, triggered when aura = 3
+
 ii.Crate bonus - Sell more than 400G worth in a crate will get bonus 100G
+
 iii.Mask       - Special item Mask will be multiply by 300G/each
 		 on the endday calculation
+		 
 iv.Random Event - random event happens on the day before ending (in morning)
 	a. Cooking contest - Chef offer to buy 3 tomato for 1500G
 	b. Wolf attack 	   - Wolf attacked (nothing happnes if no animal)
